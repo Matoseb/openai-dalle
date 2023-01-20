@@ -9,8 +9,6 @@ const openai = new OpenAIApi(configuration);
 const defaultPrompt = "realistic portrait of a normal person";
 
 export function swapFace(detections) {
-  //   cropCanvasToSquare();
-
   console.log("features", selectFeatures(detections));
 }
 

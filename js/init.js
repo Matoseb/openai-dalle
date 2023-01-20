@@ -1,9 +1,8 @@
 import { Camera } from "./main.js";
 let faceapi;
 
-export let btns = [
+export let UI_BUTTONS = [
   {
-    name: "cameraTrigger",
     id: "camera--trigger",
     dispatch: "shoot",
   },
@@ -17,44 +16,45 @@ export let btns = [
   },
 ];
 
+export let UI_CAMERA = [{ id: "camera--view" }];
+
 export function appInit() {
   const detectionOptions = {
     withLandmarks: true,
     withDescriptors: false,
   };
-  // Initialize the magicFeature
+  //ml5 init
   faceapi = ml5.faceApi(detectionOptions, modelLoaded);
+}
 
-  // When the model is loaded
-  function modelLoaded() {
-    console.log("Model Loaded!");
-    cameraStart();
-  }
+function modelLoaded() {
+  console.log("Model Loaded!");
+  cameraStart();
+}
 
+function cameraStart() {
   // Set constraints for the video stream
   let constraints = { video: { facingMode: "user" }, audio: false };
   let track = null;
 
   // Access the device camera and stream to cameraView
-  function cameraStart() {
-    const cameraView = document.querySelector("#camera--view");
-    navigator.mediaDevices
-      .getUserMedia(constraints)
-      .then((stream) => {
-        track = stream.getTracks()[0];
-        cameraView.srcObject = stream;
-      })
-      .then(() => {
-        addBtnFn();
-      })
-      .catch((error) => {
-        console.error("Oops. Something is broken.", error);
-      });
-  }
+  const cameraView = document.querySelector("#camera--view");
+  navigator.mediaDevices
+    .getUserMedia(constraints)
+    .then((stream) => {
+      track = stream.getTracks()[0];
+      cameraView.srcObject = stream;
+    })
+    .then(() => {
+      addListeners();
+    })
+    .catch((error) => {
+      console.error("Oops. Something is broken.", error);
+    });
 }
 
-function addBtnFn() {
-  btns.forEach((element) => {
+function addListeners() {
+  UI_BUTTONS.forEach((element) => {
     const selector = document.querySelector(`#${element.id}`);
     selector.addEventListener("click", () => {
       Camera.dispatch(element.dispatch);
@@ -69,6 +69,7 @@ function addBtnFn() {
       console.log(Camera.state);
     }
   });
+
   Camera.dispatch("startCamera");
 }
 

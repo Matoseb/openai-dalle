@@ -1,24 +1,22 @@
 import { Camera } from "./main.js";
 import { modelDetect } from "./detection.js";
-import { btns } from "./init.js";
+import { UI_BUTTONS, UI_CAMERA } from "./init.js";
 
 let cameraView = document.querySelector("#camera--view");
 let cameraResult = document.querySelector("#camera--result");
 let detectionsCanvas = document.querySelector("#detections--canvas");
 
 export const updateUI = (state) => {
-  const [cameraTrigger, photoClose, submitTrigger] = btns;
+  const [cameraTrigger, photoClose, submitTrigger] = UI_BUTTONS;
 
   switch (state) {
     case "SHOOT":
-      // console.log("current state is: ", state);
       photoClose.hide();
       submitTrigger.hide();
       cameraTrigger.show();
 
       break;
     case "PHOTO":
-      // console.log("current state is: ", state);
       cameraTrigger.hide();
       photoClose.show();
       break;
