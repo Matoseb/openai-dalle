@@ -5,7 +5,7 @@ import { closePhoto, takePhoto, updateUI } from "./updateUI.js";
 import { swapFace } from "./swapFace.js";
 
 import { replace } from "./ai.js";
-import { canvasToFile, urlToFile } from "./utils_seb.js";
+import { canvasToFile, urlToFile } from "./utils.js";
 import "./formdata-polyfill.js";
 
 const machine = {
